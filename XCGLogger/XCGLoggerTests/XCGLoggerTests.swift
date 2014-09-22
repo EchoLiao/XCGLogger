@@ -100,10 +100,10 @@ class XCGLoggerTests: XCTestCase {
         log.outputLogLevel = .Debug
 
         var executed: Bool = false
-        log.debugExec {
-            log.debug("executed closure correctly")
-            executed = true
-        }
+//        log.debugExec {
+//            log.debug("executed closure correctly")
+//            executed = true
+//        }
 
         log.debug("executed: \(executed)")
         XCTAssert(executed, "Fail: Didn't execute the closure when it should have")
@@ -115,10 +115,10 @@ class XCGLoggerTests: XCTestCase {
         log.outputLogLevel = .Error
 
         var executed: Bool = false
-        log.debugExec {
-            log.debug("executed closure incorrectly")
-            executed = true
-        }
+//        log.debugExec {
+//            log.debug("executed closure incorrectly")
+//            executed = true
+//        }
 
         log.outputLogLevel = .Debug
         log.debug("executed: \(executed)")

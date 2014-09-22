@@ -103,7 +103,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.rawValue >= self.outputLogLevel.rawValue
+        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
     }
 
     // MARK: - DebugPrintable
@@ -205,7 +205,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.rawValue >= self.outputLogLevel.rawValue
+        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
     }
 
     private func openFile() {
@@ -217,7 +217,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             if let path = unwrappedWriteToFileURL.path {
                 NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: unwrappedWriteToFileURL, error: &fileError)
+                logFileHandle = NSFileHandle(forWritingAtPath: unwrappedWriteToFileURL.path!)
                 if logFileHandle == nil {
                     owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
                 }
@@ -445,6 +445,7 @@ public class XCGLogger : DebugPrintable {
         self.logln(logMessage, logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
 
+/*
     public class func verboseExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
@@ -484,10 +485,11 @@ public class XCGLogger : DebugPrintable {
     public func severeExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
+*/
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.rawValue >= self.outputLogLevel.rawValue
+        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
     }
 
     public func logDestination(identifier: String) -> XCGLogDestinationProtocol? {
